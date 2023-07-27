@@ -1,11 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <h1>What do you feel like listening today?</h1>
+        <span>Select how are you feeling today?
+        <select>
+            <option value="Bright">Bright</option>
+            <option value="Blue">Blue</option> 
+            <option value="Energetic">Energetic</option>
+            {/* <option value="Snowy">Snowy</option> */}
+        </select>
+        </span>
+        
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
