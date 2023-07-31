@@ -4,6 +4,7 @@ import axios from 'axios';
 import './App.css';
 import Dropdown from './components/Dropdown';
 import Credentials from './components/Credentials';  
+import Songlist from './components/Songlist';
 // import { Routes, Route } from'react-router-dom';
 // import Mainpage from './Mainpage';
 // import Songboard from './Songboard';
@@ -40,7 +41,7 @@ function App() {
           'Authorization': 'Bearer '+ tokenResponse.data.access_token}
       })
       .then(genreResponse => {
-        console.log(genreResponse);
+        // console.log(genreResponse);
         setGenre({selectedGenre: genreResponse.selectedGenre, listOfGenre: genreResponse.data.categories.items
         })
       });
@@ -56,16 +57,31 @@ function App() {
         'Authorization': 'Bearer '+ token}
     })
     .then(playlistResponse => {
-      console.log(value);
-      console.log(playlistResponse);
+      // console.log(value);
+      // console.log(playlistResponse);
       setPlaylist({selectedPlaylist: playlistResponse.selectedPlaylist, listOfPlaylist: playlistResponse.data.playlists.items
       })
     });
   }
 
   const changePlaylist = (value) => {
-    console.log(value);
+    // console.log(value);
     setPlaylist({selectedPlaylist: value, listOfPlaylist: playlist.listOfPlaylist});
+  }
+
+  const clickButton = (event) => {
+    event.preventDefault();
+
+    axios(`https://api.spotify.com/v1/playlists/${playlist.selectedPlaylist}/tracks?limit=10`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer '+ token
+      }
+    })
+    .then(trackResponse => {
+      console.log(trackResponse);
+      setTrack({selectedTrack: trackResponse.selectedTrack, listOfTrack: trackResponse.data.items})
+    });
   }
 
   return (
@@ -75,6 +91,8 @@ function App() {
       </header>
       <Dropdown label="Genre:" options={genre.listOfGenre} selectedValue={genre.selectedGenre} change={changeGenre}/>
       <Dropdown label="Playlist:" options={playlist.listOfPlaylist} selectedValue={playlist.selectedPlaylist} change={changePlaylist}/>
+      <button onClick={clickButton}>Search</button>
+      <Songlist items={track.listOfTrack}/>
     </div>
   );
 }
