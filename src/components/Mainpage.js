@@ -1,16 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from'react';
 import axios from 'axios';
-// import './App.css';
-import Dropdown from './components/Dropdown';
-import Credentials from './components/Credentials';  
-import Songlist from './components/Songlist';
-import Player from './components/Player';
-// import { Routes, Route } from'react-router-dom';
-// import Mainpage from './Mainpage';
-// import Songboard from './Songboard';
+import Dropdown from './Dropdown';
+import Credentials from './Credentials';  
+import Songlist from './Songlist';
+import Player from './Player';
+import UserAuth from './UserAuth'; 
 
-function App() {
+function Mainpage({ code }) {
+  const accessToken = UserAuth(code)
   const spotify = Credentials();
   const data = [
     {value:1, name:'A'},
@@ -99,4 +97,4 @@ function App() {
   );
 }
 
-export default App;
+export default Mainpage;
